@@ -25,7 +25,7 @@ export default function Footer() {
             <img
               src="/images/gec-logo.jpg"
               alt="Great Escape Consulting"
-              className="h-12 w-auto mb-4 brightness-0 invert"
+              className="h-12 w-auto mb-4"
               width="120"
               height="48"
             />
