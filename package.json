@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development tsx watch server/_core/index.ts",
-    "build": "vite build",
+    "build": "vite build && npm run build:api",
+    "build:api": "esbuild server/_core/vercelEntry.ts --bundle --platform=node --format=esm --target=node20 --packages=external --tsconfig=tsconfig.json --outfile=api/index.js",
     "build:local": "vite build && esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc --noEmit",

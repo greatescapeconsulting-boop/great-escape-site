@@ -33,6 +33,31 @@ Manus lets you download assets) and drop them in that folder before you
 build. Any other images used the same way should go in the same folder —
 search the codebase for `/images/` if you add more.
 
+## ⚠️ Important: how the backend deploys on Vercel
+
+Vercel's Node runtime doesn't bundle your server code automatically the
+way local dev tools do — it needs a single, self-contained file with no
+relative imports left unresolved. So `api/index.js` (the file Vercel
+actually runs) is a **pre-built bundle**, generated from
+`server/_core/vercelEntry.ts` via esbuild, not hand-written.
+
+**Any time you change server-side code** (anything in `server/`,
+`drizzle/schema.ts`, or `shared/`), you need to regenerate that bundle
+before pushing:
+
+```
+npm run build:api
+```
+
+This also runs automatically as part of `npm run build` and as part of
+Vercel's own build step, but **the committed `api/index.js` in git is
+what matters most** — run `build:api` and commit the result any time you
+push a server-side change, don't rely solely on Vercel regenerating it.
+
+(If you're using Claude Code for future edits, it's worth telling it this
+explicitly: "after changing anything under server/, run npm run build:api
+and commit the updated api/index.js before pushing.")
+
 ## First-time setup
 
 1. **Push to GitHub**
